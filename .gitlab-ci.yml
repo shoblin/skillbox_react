@@ -1,6 +1,6 @@
-image: node:lts-stretch-slim
 
 test_firs:
+        image: node:lts-stretch-slim
         script: 
                 - yarn install
                 - CI=True yarn test
