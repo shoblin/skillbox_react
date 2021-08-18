@@ -8,7 +8,7 @@ install_dependencies:
     stage: Build
     script: yarn install
     artifacts: 
-        path:
+        paths:
             - node_modules
 
 test_run:
