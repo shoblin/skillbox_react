@@ -1,7 +1,18 @@
 
-test_firs:
-        image: node:lts-stretch-slim
-        script: 
-                - yarn install
-                - CI=True yarn test
+image: node:lts-stretch-slim
+stages:
+    - Build
+    - Test
+
+install_dependencies:
+    stage: Build
+    script: yarn install
+    artifacts: 
+        path:
+            - node_modules
+
+test_run:
+    stage: Test
+    script: 
+        - CI=True yarn test
 
