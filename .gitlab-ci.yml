@@ -10,11 +10,11 @@ install_dependencies:
         paths:
             - node_modules
     cache:
-        - key:
+        key:
             files:
                 - .yarn.lock
-            paths: 
-                - node_modules
+        paths: 
+            - node_modules
 
 
 test_run:
