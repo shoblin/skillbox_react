@@ -41,7 +41,7 @@ test_delpoy:
     tags: 
         - deploy-node-js
     script:
-        - mkdir /www/test-app/$CI_COMMIT_SHORT_SHA
+        - mkdir -p /www/test-app/$CI_COMMIT_SHORT_SHA
         - cp -r build /www/test-app/$CI_COMMIT_SHORT_SHA
         - ln -fsnv /var/www/test-app/$CI_COMMIT_SHORT_SHA /www/html
 
