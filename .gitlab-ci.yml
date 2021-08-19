@@ -5,8 +5,7 @@ stages:
 
 install_dependencies:
     stage: Build
-    script: 
-        - yarn install:
+    script: yarn install:
     artifacts: 
         paths:
             - node_modules
