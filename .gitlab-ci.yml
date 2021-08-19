@@ -8,7 +8,6 @@ install_dependencies:
     stage: Build
     tags:
         - test-react
-        - deploy-node-js
     script:
         - yarn install
         - yarn build
