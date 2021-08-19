@@ -31,7 +31,7 @@ unit_test:
     linter_standard:
     stage: Test
     before_script:
-        - echo "{ 'extends': 'standard'}" >.eslintrc 
+        - ./standard_linter.sh 
     script:
         - yarn linter
     allow_failure: true
