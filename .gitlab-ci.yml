@@ -52,7 +52,6 @@ revert_prev_version:
     stage: Revert
     when: manual
     script:
+        - DIR=/www/test-app/$(date +%Y-%m-%d_%k-%M-%S)   
         - cp -Pv --remove-destination $DIR/prev-version /www/html
-
-
            
