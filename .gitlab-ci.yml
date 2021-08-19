@@ -20,7 +20,7 @@ install_dependencies:
 linter:
     stage: Test
     script: 
-        - CI=True yarn linter
+        - yarn linter
 
 unit_test:
     stage: Test
