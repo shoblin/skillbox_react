@@ -43,7 +43,7 @@ test_delpoy:
     script:
         - DIR=/www/test-app/$(date +%Y-%m-%d_%k-%M-%S)   
         - mkdir -p $DIR
-        - cp -r build $DIR
+        - cp -r build/. $DIR
         - ln -fsnv /var$DIR /www/html
 
            
