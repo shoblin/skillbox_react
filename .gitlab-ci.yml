@@ -41,7 +41,7 @@ test_delpoy:
     tags: 
         - deploy-node-js
     script:
-        - DIR=/www/test-app/$$(date +%Y-%m-%d_%k-%M-%S)   
+        - DIR=/www/test-app/$(date +%Y-%m-%d_%k-%M-%S)   
         - mkdir -p $DIR
         - cp -r build $DIR
         - ln -fsnv /var$DIR /www/html
