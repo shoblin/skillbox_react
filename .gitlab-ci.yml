@@ -21,6 +21,7 @@ linter:
     stage: Test
     script: 
         - yarn linter
+    allow_failure: true
 
 unit_test:
     stage: Test
