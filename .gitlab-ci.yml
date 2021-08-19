@@ -20,10 +20,20 @@ install_dependencies:
 linter:
     stage: Test
     script: 
-        - CI=True yarn linter
+        - CI=True linter
 
 unit_test:
     stage: Test
     script: 
         - CI=True yarn test
 
+
+    linter_standard:
+    stage: Test
+    before_script:
+        - echo "{ 'extends': 'standard'}" >.eslintrc 
+    script:
+        - yarn linter
+    allow_failure: true
+    after_script:
+        - rm -f .eslintrc
