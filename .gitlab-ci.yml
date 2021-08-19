@@ -1,15 +1,21 @@
-image: node:lts-stretch-slim
 stages:
     - Build
     - Test
+    - Deploy
 
 install_dependencies:
+    image: node:lts-stretch-slim
     stage: Build
-    script: yarn install
+    tags:
+        - test-react
+        - deploy-node-js
+    script:
+        - yarn install
+        - yarn build
     artifacts: 
         paths:
             - node_modules
-    
+            - build
     cache:
         key:
             files:
@@ -19,20 +25,24 @@ install_dependencies:
 
 linter:
     stage: Test
+    tags: 
+        - test-react
     script: 
         - yarn linter
 
 unit_test:
     stage: Test
+    tags:
+        - test-react
     script: 
         - CI=True yarn test
 
-linter_standard:
-    stage: Test
-    before_script:
-        - ./standard_linter.sh 
+test_delpoy:
+    stage: Deploy
+    tags: 
+        - deploy-node-js
     script:
-        - yarn linter
-    allow_failure: true
-    after_script:
-        - rm -f .eslintrc
+        - cp -r build /www/test-app/$CI_COMMIT_SHORT_SHA
+        - ln -fsnv /var/www/test-app/$CI_COMMIT_SHORT_SHA /www/html
+
+           
