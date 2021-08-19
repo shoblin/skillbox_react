@@ -1,10 +1,10 @@
+image: node:lts-stretch-slim
 stages:
     - Build
     - Test
     - Deploy
 
 install_dependencies:
-    image: node:lts-stretch-slim
     stage: Build
     tags:
         - test-react
