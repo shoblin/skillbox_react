@@ -3,6 +3,7 @@ stages:
     - Build
     - Test
     - Deploy
+    - Revert
 
 install_dependencies:
     stage: Build
@@ -44,6 +45,14 @@ test_delpoy:
         - DIR=/www/test-app/$(date +%Y-%m-%d_%k-%M-%S)   
         - mkdir -p $DIR
         - cp -r build/. $DIR
+        - cp -Pv /www/html $DIR/prev-version
         - ln -fsnv /var$DIR /www/html
+
+revert_prev_version:
+    stage: Revert
+    when: manual
+    script:
+        - cp -Pv --remove-destination $DIR/prev-version /www/html
+
 
            
