@@ -5,7 +5,8 @@ stages:
 
 install_dependencies:
     stage: Build
-    script: yarn install
+    script: 
+        - yarn install:
     artifacts: 
         paths:
             - node_modules
@@ -17,8 +18,12 @@ install_dependencies:
         paths: 
             - node_modules
 
+linter:
+    stage: Test
+    script: 
+        - CI=True yarn linter
 
-test_run:
+unit_test:
     stage: Test
     script: 
         - CI=True yarn test
