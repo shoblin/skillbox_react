@@ -27,8 +27,7 @@ unit_test:
     script: 
         - CI=True yarn test
 
-
-    linter_standard:
+linter_standard:
     stage: Test
     before_script:
         - ./standard_linter.sh 
