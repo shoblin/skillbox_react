@@ -42,7 +42,7 @@ test_delpoy:
     tags: 
         - deploy-node-js
     script:
-        - DIR=/www/test-app/$CI_COMMIT_SHOT_SHA   
+        - DIR=/www/test-app/$CI_COMMIT_SHORT_SHA   
         - echo $DIR > vars
         - mkdir -p $DIR
         - cp -r build/. $DIR
@@ -53,6 +53,6 @@ revert_prev_version:
     stage: Revert
     when: manual
     script:
-        - DIR=/www/test-app/$CI_COMMIT_SHOT_SHA  
+        - DIR=/www/test-app/$CI_COMMIT_SHORT_SHA  
         - cp -Pv --remove-destination $DIR/prev-version /www/html
            
