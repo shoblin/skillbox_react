@@ -51,6 +51,8 @@ test_delpoy:
 
 revert_prev_version:
     stage: Revert
+    tags: 
+        - deploy-node-js
     when: manual
     script:
         - DIR=/www/test-app/$CI_COMMIT_SHORT_SHA  
