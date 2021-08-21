@@ -4,7 +4,8 @@ stages:
     - Test
 
 
-stage: Build
+install_dependencies:
+    stage: Build
     tags:
         - test-react
     script:
