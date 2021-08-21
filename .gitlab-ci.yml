@@ -35,14 +35,5 @@ unit_test:
     script: 
         - CI=True yarn test
 
-linter_standard:
-    stage: Test
-    before_script:
-        - ./standard_linter.sh 
-    script:
-        - yarn linter
-    allow_failure: true
-    after_script:
-        - rm -f .eslintrc
 
            
