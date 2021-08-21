@@ -2,26 +2,23 @@ image: node:lts-stretch-slim
 stages:
     - Build
     - Test
-    - Deploy
-    - Revert
 
-install_dependencies:
-    stage: Build
+
+stage: Build
     tags:
         - test-react
     script:
         - yarn install
-        - yarn build
     artifacts: 
         paths:
             - node_modules
-            - build
     cache:
         key:
             files:
                 - .yarn.lock
         paths: 
             - node_modules
+
 
 linter:
     stage: Test
@@ -37,24 +34,14 @@ unit_test:
     script: 
         - CI=True yarn test
 
-test_delpoy:
-    stage: Deploy
-    tags: 
-        - deploy-node-js
+linter_standard:
+    stage: Test
+    before_script:
+        - ./standard_linter.sh 
     script:
-        - DIR=/www/test-app/$CI_COMMIT_SHORT_SHA   
-        - echo $DIR > vars
-        - mkdir -p $DIR
-        - cp -r build/. $DIR
-        - cp -Pv /www/html $DIR/prev-version
-        - ln -fsnv /var$DIR /www/html
+        - yarn linter
+    allow_failure: true
+    after_script:
+        - rm -f .eslintrc
 
-revert_prev_version:
-    stage: Revert
-    tags: 
-        - deploy-node-js
-    when: manual
-    script:
-        - DIR=/www/test-app/$CI_COMMIT_SHORT_SHA  
-        - cp -Pv --remove-destination $DIR/prev-version /www/html
            
