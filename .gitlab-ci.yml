@@ -57,6 +57,7 @@ revert_prev_version:
     stage: Revert
     tags: 
         - deploy-node-js
+
     when: manual
     script:  
         - cp -Pv --remove-destination /$new_deploy_dir/prev-version $docker_html_path
