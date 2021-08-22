@@ -2,6 +2,12 @@ image: node:lts-stretch-slim
 stages:
     - Build
     - Test
+    - Deploy
+    - Revert
+
+variables: 
+    new_deploy_dir: 'www/test-app/$CI_COMMIT_SHORT_SHA'
+    docker_html_path: '/www/html'
 
 
 install_dependencies:
@@ -10,16 +16,17 @@ install_dependencies:
         - test-react
     script:
         - yarn install
+        - yarn build
     artifacts: 
         paths:
             - node_modules
+            - build
     cache:
         key:
             files:
                 - .yarn.lock
         paths: 
             - node_modules
-
 
 linter:
     stage: Test
@@ -35,5 +42,22 @@ unit_test:
     script: 
         - CI=True yarn test
 
+test_delpoy:
+    stage: Deploy
+    tags: 
+        - deploy-node-js
+    script:   
+        - mkdir -p $DIR
+        - cp -r build/. /$new_deploy_dir
+        - cp -Pv $docker_html_path /$new_deploy_dir/prev-version
+        - ln -fsnv /var/$new_deploy_dir/ $docker_html_path
 
+
+revert_prev_version:
+    stage: Revert
+    tags: 
+        - deploy-node-js
+    when: manual
+    script:  
+        - cp -Pv --remove-destination /$new_deploy_dir/prev-version $docker_html_path
            
