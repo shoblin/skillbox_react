@@ -47,7 +47,7 @@ test_delpoy:
     tags: 
         - deploy-node-js
     script:   
-        - mkdir -p $DIR
+        - mkdir -p /$new_deploy_dir
         - cp -r build/. /$new_deploy_dir
         - cp -Pv $docker_html_path /$new_deploy_dir/prev-version
         - ln -fsnv /var/$new_deploy_dir/ $docker_html_path
