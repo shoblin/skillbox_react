@@ -67,7 +67,7 @@ Deploy_staging:
     allow_failure: true
     only:
         - master
-        - /^featcher-.*/
+        - /^feature-.*/
 
 activite_staging:
     extends: activate_prod
