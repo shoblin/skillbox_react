@@ -7,9 +7,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          NO EDIT <code>src/App.js</code> 
+          %REACT_APP_COMMIT% <code>src/App.js</code> 
         </p>
-	 <p>=========TEST================</p> 
+ 
         <a
           className="App-link"
           href="https://reactjs.org"

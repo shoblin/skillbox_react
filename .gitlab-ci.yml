@@ -9,7 +9,7 @@ variables:
     new_deploy_dir: 'www/test-app/$CI_COMMIT_SHA'
     prev_deploy_dir: 'www/test-app/$CI_COMMIT_BEFORE_SHA'
     docker_html_path: '/www/html'
-
+    REACT_APP_COMMIT: '$CI_COMMIT_SHA'
 
 install_dependencies:
     stage: Build
