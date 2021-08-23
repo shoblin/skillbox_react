@@ -5,23 +5,28 @@ stages:
     - Deploy
     - Revert
 
+
 variables: 
-    new_deploy_dir: 'www/test-app/$CI_COMMIT_SHA'
-    prev_deploy_dir: 'www/test-app/$CI_COMMIT_BEFORE_SHA'
-    docker_html_path: '/www/html'
+    env: 'prod'
+    new_deploy_dir: 'test-app/${env}_$CI_COMMIT_SHA'
+    prev_deploy_dir: 'test-app/${env}_$CI_COMMIT_BEFORE_SHA'
+    docker_html_path: 'www'
+    deploy_subdir: 'html'
     REACT_APP_COMMIT: '$CI_COMMIT_SHA'
 
-install_dependencies:
+
+Build_PROD:
     stage: Build
     tags:
         - test-react
     script:
         - yarn install
         - yarn build
+        - mv build build_$env
     artifacts: 
         paths:
             - node_modules
-            - build
+            - build_$env
     cache:
         key:
             files:
@@ -29,17 +34,59 @@ install_dependencies:
         paths: 
             - node_modules
 
+Build_stage:
+    stage: Build
+    tags:
+        - test-react
+    extends: Build_PROD
+    variables:
+        env: staging
+        REACT_APP_WEBSITE_PREFIX: "[staging]"
+        PUBLIC_URL: "/$CI_COMMIT_BRANCH"    
 
-test_delpoy:
+
+
+Delpoy_PROD:
     stage: Deploy
     tags: 
         - deploy-node-js
     script:   
-        - mkdir -p /$new_deploy_dir
-        - cp -r build/. /$new_deploy_dir
-        - cp -Pv $docker_html_path /$new_deploy_dir/prev-version
-        - ln -fsnv /var/$new_deploy_dir/ $docker_html_path
+        - mkdir -p /$docker_html_path/$new_deploy_dir
+        - cp -r build_$env/. /$docker_html_path/$new_deploy_dir
+        - cp -Pv $docker_html_path/$deploy_subdir /$docker_html_path/$new_deploy_dir/prev-version
+    only:
+        - master
 
+Deploy_staging:
+    extends: delpoy_PROD
+    variables: 
+        deploy_subdir: staging/$CI_COMMIT_BRANCH
+        env: staging
+    when:
+        always
+    only:
+        - master
+        - featcher-*
+
+activite_staging:
+    extends: activate_prod
+    variables:
+        deploy_subdir: staging/$CI_COMMIT_BRANCH
+        env: staging
+    when: always
+    only:
+        - master
+        - feature-.*
+
+activate_prod:
+    stage: Deploy
+    tags:
+        - deploy-node-js
+    script:
+        - ln -fsnv /var/$docker_html_path/$new_deploy_dir /$docker_html_path/$deploy_subdir
+    when: manual
+    only:
+        - master
 
 revert_version:
     stage: Revert
@@ -47,7 +94,7 @@ revert_version:
         - deploy-node-js
     when: manual
     script:  
-        - cp -Pv --remove-destination /$new_deploy_dir/prev-version $docker_html_path
+        - cp -Pv --remove-destination /$new_deploy_dir/prev-version $docker_html_path/html
 
 revert_previous_version:
    stage: Revert
@@ -55,4 +102,4 @@ revert_previous_version:
        - deploy-node-js
    when: manual
    script:
-       - cp Pv --remove-destination /$prev_deploy_dir/prev-version $docker_html_path
+       - cp Pv --remove-destination /$prev_deploy_dir/prev-version $docker_html_path/html
