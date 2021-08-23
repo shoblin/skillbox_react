@@ -53,7 +53,7 @@ Delpoy_PROD:
     script:   
         - mkdir -p /$docker_html_path/$new_deploy_dir
         - cp -r build_$env/. /$docker_html_path/$new_deploy_dir
-        - cp -Pv $docker_html_path/$deploy_subdir /$docker_html_path/$new_deploy_dir/prev-version
+        - cp -Pv /$docker_html_path/$deploy_subdir /$docker_html_path/$new_deploy_dir/prev-version
     only:
         - master
 
