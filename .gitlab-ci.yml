@@ -64,9 +64,10 @@ Deploy_staging:
         env: staging
     when:
         always
+    allow_failure: true
     only:
         - master
-        - featcher-*
+        - /^featcher-.*/
 
 activite_staging:
     extends: activate_prod
@@ -76,7 +77,7 @@ activite_staging:
     when: always
     only:
         - master
-        - feature-.*
+        - /^feature-.*/
 
 activate_prod:
     stage: Deploy
