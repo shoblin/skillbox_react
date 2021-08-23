@@ -11,7 +11,6 @@ variables:
     prev_deploy_dir: 'test-app/${env}_$CI_COMMIT_BEFORE_SHA'
     docker_html_path: 'www'
     deploy_subdir: 'html'
-    REACT_APP_COMMIT: '$CI_COMMIT_SHA'
 
 
 Build_PROD:
@@ -41,7 +40,7 @@ Build_stage:
     extends: Build_PROD
     variables:
         env: staging
-        REACT_APP_WEBSITE_PREFIX: "[staging]"
+        REACT_APP_WEBSITE_PREFIX: "[branch=$CI_COMMIT_BRANCH]"
         PUBLIC_URL: "/$CI_COMMIT_BRANCH"    
 
 

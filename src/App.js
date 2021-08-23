@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          %REACT_APP_COMMIT% <code>src/App.js</code> 
+          Edit <code>src/App.js</code> 
         </p>
  
         <a
