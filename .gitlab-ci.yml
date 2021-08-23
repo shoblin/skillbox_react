@@ -6,7 +6,8 @@ stages:
     - Revert
 
 variables: 
-    new_deploy_dir: 'www/test-app/$CI_COMMIT_SHORT_SHA'
+    new_deploy_dir: 'www/test-app/$CI_COMMIT_SHA'
+    prev_deploy_dir: 'www/test-app/$CI_COMMIT_BEFORE_SHA'
     docker_html_path: '/www/html'
 
 
@@ -28,19 +29,6 @@ install_dependencies:
         paths: 
             - node_modules
 
-linter:
-    stage: Test
-    tags: 
-        - test-react
-    script: 
-        - yarn linter
-
-unit_test:
-    stage: Test
-    tags:
-        - test-react
-    script: 
-        - CI=True yarn test
 
 test_delpoy:
     stage: Deploy
@@ -53,12 +41,18 @@ test_delpoy:
         - ln -fsnv /var/$new_deploy_dir/ $docker_html_path
 
 
-revert_prev_version:
+revert_version:
     stage: Revert
     tags: 
         - deploy-node-js
-
     when: manual
     script:  
         - cp -Pv --remove-destination /$new_deploy_dir/prev-version $docker_html_path
-           
+
+revert_previous_version:
+   stage: Revert
+   tags:
+       - deploy-node-js
+   when: manual
+   script:
+       - cp Pv --remove-destination /$prev_deploy_dir/prev-version $docker_html_path
