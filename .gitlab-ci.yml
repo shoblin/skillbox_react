@@ -11,6 +11,7 @@ variables:
     prev_deploy_dir: 'test-app/${env}_$CI_COMMIT_BEFORE_SHA'
     docker_html_path: 'www'
     deploy_subdir: 'html'
+    REACT_APP_WEBSITE_PREFIX: ""
 
 
 Build_PROD:
@@ -102,4 +103,4 @@ revert_previous_version:
        - deploy-node-js
    when: manual
    script:
-       - cp Pv --remove-destination /$prev_deploy_dir/prev-version $docker_html_path/html
+       - cp -Pv --remove-destination /$prev_deploy_dir/prev-version $docker_html_path/html
