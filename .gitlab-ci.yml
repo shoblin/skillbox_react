@@ -58,7 +58,7 @@ Delpoy_PROD:
         - master
 
 Deploy_staging:
-    extends: delpoy_PROD
+    extends: Delpoy_PROD 
     variables: 
         deploy_subdir: staging/$CI_COMMIT_BRANCH
         env: staging
