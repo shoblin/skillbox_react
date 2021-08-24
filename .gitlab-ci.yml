@@ -95,7 +95,7 @@ revert_version:
         - deploy-node-js
     when: manual
     script:  
-        - cp -Pv --remove-destination /$docker_html_path/$new_deploy_dir/prev-version $docker_html_path/html
+        - cp -Pv --remove-destination /$docker_html_path/$new_deploy_dir/prev-version /$docker_html_path/html
 
 revert_previous_version:
    stage: Revert
@@ -103,4 +103,4 @@ revert_previous_version:
        - deploy-node-js
    when: manual
    script:
-       - cp -Pv --remove-destination /$docker_html_path/$prev_deploy_dir/prev-version $docker_html_path/html
+       - cp -Pv --remove-destination /$docker_html_path/$prev_deploy_dir/prev-version /$docker_html_path/html
